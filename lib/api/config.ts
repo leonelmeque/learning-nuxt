@@ -1,8 +1,5 @@
-const cache = new Map()
-
 export const useClient = () => {
   const config = useRuntimeConfig()
-  // const API_URL = `http://www.omdbapi.com/?i=${API_I}&apikey=${API_KEY}`
 
   const fetcher = (method: 'GET' | 'PUT' | 'POST' | 'DELETE') => {
     const headers = {

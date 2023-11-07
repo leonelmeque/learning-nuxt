@@ -1,14 +1,18 @@
-<script setup>
+<script lang="ts" setup>
   import { useClient } from '~/lib/api/config'
 
   const { params } = useRoute()
 
-  const { data, error } = useAsyncData(`movie:${params.id}`, () => {
-    const client = useClient()
-    return client.get(`&i=${params.id}`)
-  })
-
-  console.log(error.value)
+  const { data } = useAsyncData(
+    `movie:${params.id}`,
+    () => {
+      const client = useClient()
+      return client.get(`&i=${params.id}`)
+    },
+    {
+      pick: ['Plot', 'Title'],
+    },
+  )
 </script>
 
 <template>
