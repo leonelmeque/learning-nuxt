@@ -17,7 +17,6 @@ export const useMovieSearch = () => {
   async function search() {
     const data = await client.get<{ Search: Movie[] }>(`&s=${query.value}`)
     movies.value = data.Search
-    console.log(data)
   }
 
   return {
