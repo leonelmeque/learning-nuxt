@@ -1,18 +1,19 @@
-<script lang="ts" setup>
-  import { useClient } from '~/lib/api/config'
+<script setup>
+  import { useCustomFetch } from '~/lib/api/config'
 
   const { params } = useRoute()
 
-  const { data } = useAsyncData(
-    `movie:${params.id}`,
-    () => {
-      const client = useClient()
-      return client.get(`&i=${params.id}`)
-    },
-    {
-      pick: ['Plot', 'Title'],
-    },
-  )
+  const { data, error } = await useCustomFetch(`&i=${params.id}`, {
+    pick: ['Title', 'Plot', 'Error'],
+    key: `movie:${params.id}`,
+  })
+
+  if (data.value.Error === 'Incorrect IMDb ID.') {
+    showError({
+      statusCode: 404,
+      statusMessage: 'Page Not Found',
+    })
+  }
 </script>
 
 <template>
