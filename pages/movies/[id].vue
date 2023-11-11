@@ -1,23 +1,21 @@
 <script setup>
-  import { useCustomFetch } from '~/lib/api/config'
-
   const { params } = useRoute()
 
-  const { data, error } = await useCustomFetch(`&i=${params.id}`, {
-    pick: ['Title', 'Plot', 'Error'],
-    key: `movie:${params.id}`,
-  })
+  const { movie } = await useGetMovieById(params.id)
 
-  if (data.value.Error === 'Incorrect IMDb ID.') {
-    showError({
-      statusCode: 404,
-      statusMessage: 'Page Not Found',
-    })
-  }
+  useHead({
+    title: movie.value.Title,
+    meta: [
+      { name: 'description', content: movie.value.Plot },
+      { property: 'og:description', content: movie.value.Plot },
+      { property: 'og:image', content: movie.value.Poster },
+      { name: 'twitter:card', content: `summary_large_image` },
+    ],
+  })
 </script>
 
 <template>
   <div>
-    <pre>{{ data }}</pre>
+    <pre>{{ movie }}</pre>
   </div>
 </template>

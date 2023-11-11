@@ -19,9 +19,9 @@ export const useClient = () => {
   }
 }
 
-export const useCustomFetch = async (
+export const useCustomFetch = async <T>(
   path: string,
-  options: UseFetchOptions<unknown>,
+  options: UseFetchOptions<T>,
 ) => {
   const config = useRuntimeConfig()
 
